@@ -1,6 +1,6 @@
 {
   "name": "@plasius/video",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Standalone npm package for video generation components and helpers for the Plasius ecosystem",
   "type": "module",
   "private": false,
