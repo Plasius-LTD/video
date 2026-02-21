@@ -1,0 +1,85 @@
+# @plasius/video
+
+[![npm version](https://img.shields.io/npm/v/@plasius/video.svg)](https://www.npmjs.com/package/@plasius/video)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/Plasius-LTD/video/ci.yml?branch=main&label=build&style=flat)](https://github.com/Plasius-LTD/video/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](./LICENSE)
+[![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-yes-blue.svg)](./CODE_OF_CONDUCT.md)
+[![Security Policy](https://img.shields.io/badge/security%20policy-yes-orange.svg)](./SECURITY.md)
+[![Changelog](https://img.shields.io/badge/changelog-md-blue.svg)](./CHANGELOG.md)
+
+Video generation components and helpers for the Plasius ecosystem.
+
+Apache-2.0. ESM + CJS builds. TypeScript types included.
+
+---
+
+## Installation
+
+```bash
+npm install @plasius/video
+```
+
+---
+
+## Usage
+
+```ts
+import { videoPackageInfo } from "@plasius/video";
+
+console.log(videoPackageInfo.name, videoPackageInfo.version);
+```
+
+---
+
+## Node.js Version
+
+This project uses Node.js **24** by default. The version is pinned in the [`.nvmrc`](./.nvmrc) file.
+
+If you use [nvm](https://github.com/nvm-sh/nvm), run:
+
+```bash
+nvm use
+```
+
+---
+
+## Package Scope
+
+`@plasius/video` is intended to host reusable video generation interfaces and shared view-model logic used across Plasius applications.
+
+---
+
+## Development
+
+```bash
+npm install
+npm run build
+npm run test
+npm run demo:run
+```
+
+---
+
+## Publishing
+
+This package is published via GitHub CD only.
+
+1. Configure repository environment `production` with secret `NPM_TOKEN`.
+2. Run `.github/workflows/cd.yml` via **Actions -> CD (Publish to npm) -> Run workflow**.
+3. Select the version bump (`patch`, `minor`, `major`, or `none`) and optional pre-release id.
+
+---
+
+## Contributing
+
+We welcome contributions. See:
+
+- [Contributing Guide](./CONTRIBUTING.md)
+- [Code of Conduct](./CODE_OF_CONDUCT.md)
+- [Contributor License Agreement](./legal/CLA.md)
+
+---
+
+## License
+
+Licensed under the [Apache-2.0 License](./LICENSE).

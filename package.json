@@ -1,0 +1,108 @@
+{
+  "name": "@plasius/video",
+  "version": "0.1.1",
+  "description": "Standalone npm package for video generation components and helpers for the Plasius ecosystem",
+  "type": "module",
+  "private": false,
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTORS.md",
+    "CONTRIBUTING.md",
+    "legal"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "prepare": "npm run build",
+    "clean": "rimraf dist",
+    "reset:clean": "rm -rf node_modules package-lock.json && npm run clean",
+    "audit:ts": "tsc --noEmit --pretty",
+    "audit:eslint": "eslint \"{src,apps,packages}/**/*.{ts,tsx}\" --max-warnings=0 --ext .ts,.tsx",
+    "audit:deps": "npm ls --all --omit=optional --omit=peer > /dev/null 2>&1 || true",
+    "audit:npm": "npm audit --audit-level=moderate || true",
+    "audit:test": "vitest run --coverage",
+    "audit:all": "npm-run-all -l audit:ts audit:eslint audit:deps audit:npm audit:test",
+    "demo:run": "npm run build && node demo/example.mjs"
+  },
+  "keywords": [
+    "video",
+    "video-generation",
+    "pixelverse",
+    "react",
+    "typescript",
+    "plasius"
+  ],
+  "author": "Plasius LTD <development@plasius.co.uk>",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Plasius-LTD/video.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Plasius-LTD/video/issues"
+  },
+  "homepage": "https://github.com/Plasius-LTD/video#readme",
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^24.3.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitest/coverage-v8": "^4.0.18",
+    "ajv": "^6.12.6",
+    "eslint": "^10.0.1",
+    "npm-run-all": "^1.1.3",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "zod": "^4.1.12"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "funding": [
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/c/plasiusltd/membership"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/Plasius-LTD"
+    }
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "packageManager": "npm@11.4.2"
+}
