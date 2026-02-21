@@ -18,6 +18,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - Updated CD test stage to execute `npm run test:coverage` and upload coverage to Codecov using OIDC in the release pipeline.
   - Updated Vitest coverage reporters to include `lcov` output for Codecov ingestion.
   - Made SBOM generation non-blocking in CD and only attest when `sbom.cdx.json` is present.
+  - Made SBOM release-asset upload non-blocking to avoid failing publish after successful npm release.
 
 - **Fixed**
   - (placeholder)

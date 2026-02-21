@@ -171,6 +171,6 @@ jobs:
             gh release create "$TAG" --title "Release $TAG" --generate-notes --latest
           fi
 
-          if [ -f sbom.cdx.json ]; then
-            gh release upload "$TAG" sbom.cdx.json --clobber
+          if [ -s sbom.cdx.json ]; then
+            gh release upload "$TAG" sbom.cdx.json --clobber || echo "Warning: failed to upload sbom.cdx.json"
           fi
