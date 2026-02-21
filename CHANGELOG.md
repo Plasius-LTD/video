@@ -9,7 +9,10 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [Unreleased]
 
 - **Added**
-  - (placeholder)
+  - Added AI video generation design-system modules under `src/ai-video-generation/` with typed stage, token, and model definitions.
+  - Added `AIVideoGenerationScreen` and `AIVideoGenerationStudioDemo` React components to provide a demo-ready staged UI scaffold.
+  - Added visual-style token exports (`aiVideoGenerationTokens`) and stage-flow metadata (`aiVideoStageFlow`) for host app integration.
+  - Added tests for design token values, stage ordering, and core style hooks in `tests/ai-video-generation-design.test.ts`.
 
 - **Changed**
   - Added package-level GitHub CD publish workflow at `.github/workflows/cd.yml` for npm publication with provenance.
@@ -21,9 +24,10 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - Made SBOM release-asset upload non-blocking to avoid failing publish after successful npm release.
   - Updated README badges to include Codecov coverage and point workflow status to `cd.yml`.
   - Normalized README section headings/formatting for consistent markdown rendering.
+  - Expanded README/demo examples to include the AI video generation screen scaffold and exported style primitives.
 
 - **Fixed**
-  - (placeholder)
+  - Updated `videoPackageInfo.version` to match the current package line.
 
 - **Security**
   - Removed `depcheck` (and its `multimatch`/`minimatch` chain) from devDependencies to resolve reported high-severity audit findings.

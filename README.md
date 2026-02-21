@@ -21,9 +21,21 @@ npm install @plasius/video
 ## Usage
 
 ```ts
-import { videoPackageInfo } from "@plasius/video";
+import {
+  AIVideoGenerationScreen,
+  createAIVideoGenerationDemoModel,
+  aiVideoGenerationTokens,
+  aiVideoStageFlow,
+  videoPackageInfo,
+} from "@plasius/video";
 
 console.log(videoPackageInfo.name, videoPackageInfo.version);
+console.log(aiVideoGenerationTokens.color.background);
+console.log(aiVideoStageFlow.map((stage) => stage.stage));
+
+const model = createAIVideoGenerationDemoModel("imageSelection");
+void AIVideoGenerationScreen;
+void model;
 ```
 
 ## Node.js Version
@@ -39,6 +51,42 @@ nvm use
 ## Package Scope
 
 `@plasius/video` is intended to host reusable video generation interfaces and shared view-model logic used across Plasius applications.
+
+## AI Video Generation Visual Styling Pieces
+
+This package now includes a design-system aligned screen scaffold for:
+
+- Prompt entry
+- Image generation and selection
+- Video generation and motion editing
+- Playback controls
+- Voiceover panel
+- Export state
+
+Primary exports:
+
+- `AIVideoGenerationScreen`
+- `AIVideoGenerationStudioDemo`
+- `createAIVideoGenerationDemoModel`
+- `aiVideoGenerationTokens`
+- `aiVideoStageFlow`
+- `AI_VIDEO_GENERATION_SCREEN_STYLES`
+
+Reference design document:
+
+- [`docs/ai-video-generation-screen-visual-styling-guide.md`](./docs/ai-video-generation-screen-visual-styling-guide.md)
+
+## State Flow Summary
+
+The staged flow aligns to the screen design sequence:
+
+1. `idle`
+2. `generatingImages`
+3. `imageSelection`
+4. `generatingVideo`
+5. `playback`
+6. `voiceover`
+7. `export`
 
 ## Development
 
