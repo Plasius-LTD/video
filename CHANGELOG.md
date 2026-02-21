@@ -19,6 +19,8 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - Updated Vitest coverage reporters to include `lcov` output for Codecov ingestion.
   - Made SBOM generation non-blocking in CD and only attest when `sbom.cdx.json` is present.
   - Made SBOM release-asset upload non-blocking to avoid failing publish after successful npm release.
+  - Updated README badges to include Codecov coverage and point workflow status to `cd.yml`.
+  - Normalized README section headings/formatting for consistent markdown rendering.
 
 - **Fixed**
   - (placeholder)
