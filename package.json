@@ -45,7 +45,9 @@
     "audit:npm": "npm audit --audit-level=moderate || true",
     "audit:test": "vitest run --coverage",
     "audit:all": "npm-run-all -l audit:ts audit:eslint audit:deps audit:npm audit:test",
-    "demo:run": "npm run build && node demo/example.mjs"
+    "demo:run": "npm run build && node demo/example.mjs",
+    "pack:check": "node scripts/verify-public-package.cjs",
+    "prepublishOnly": "npm run build && npm run pack:check"
   },
   "keywords": [
     "video",
