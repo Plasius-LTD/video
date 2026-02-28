@@ -44,6 +44,21 @@ describe("ai video generation stage flow", () => {
     expect(voiceoverModel.stage).toBe("voiceover");
   });
 
+  it("provides idle state safeguards for uploaded image workflows", () => {
+    const idleModel = createAIVideoGenerationDemoModel("idle");
+    expect(idleModel.uploadedImageName).toBe("uploaded-village-frame.png");
+    expect(idleModel.motionPrompt).toBe("");
+    expect(idleModel.canGenerate).toBe(false);
+    expect(idleModel.statusText).toContain("required");
+    expect(idleModel.imageVariants).toHaveLength(0);
+  });
+
+  it("marks a selected image for downstream video stages", () => {
+    const videoModel = createAIVideoGenerationDemoModel("generatingVideo");
+    expect(videoModel.selectedImageId).toBe("img-3");
+    expect(videoModel.imageVariants.some((variant) => variant.isSelected)).toBe(true);
+  });
+
   it("contains style hooks for key visual areas", () => {
     expect(AI_VIDEO_GENERATION_SCREEN_STYLES).toContain("--plv-header-height: 64px");
     expect(AI_VIDEO_GENERATION_SCREEN_STYLES).toContain(".plv-image-grid");
