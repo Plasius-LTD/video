@@ -9,12 +9,17 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 ## [Unreleased]
 
 - **Added**
+  - Added package CI workflow (`.github/workflows/ci.yml`) to validate pull requests and main-branch pushes before release.
+  - Added component-level tests for `AIVideoGenerationScreen` and `AIVideoGenerationStudioDemo`.
   - Added AI video generation design-system modules under `src/ai-video-generation/` with typed stage, token, and model definitions.
   - Added `AIVideoGenerationScreen` and `AIVideoGenerationStudioDemo` React components to provide a demo-ready staged UI scaffold.
   - Added visual-style token exports (`aiVideoGenerationTokens`) and stage-flow metadata (`aiVideoStageFlow`) for host app integration.
   - Added tests for design token values, stage ordering, and core style hooks in `tests/ai-video-generation-design.test.ts`.
 
 - **Changed**
+  - Migrated linting to ESLint flat config (`eslint.config.js`) for ESLint v10 compatibility.
+  - Updated `lint`, `audit:eslint`, and `audit:npm` scripts to enforce stricter gates for CI.
+  - Updated Vitest environment to `jsdom`, disabled `passWithNoTests`, and added coverage thresholds.
   - Added package-level GitHub CD publish workflow at `.github/workflows/cd.yml` for npm publication with provenance.
   - Hardened publish sequence to run install/test/build before version tagging and npm publish.
   - Replaced `audit:deps` from `depcheck` to `npm ls --all --omit=optional --omit=peer > /dev/null 2>&1 || true` to avoid deprecated dependency-chain risk.
@@ -27,6 +32,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - Expanded README/demo examples to include the AI video generation screen scaffold and exported style primitives.
 
 - **Fixed**
+  - Fixed publish-package verification regex escaping in `scripts/verify-public-package.cjs`.
   - Updated `videoPackageInfo.version` to match the current package line.
 
 - **Security**

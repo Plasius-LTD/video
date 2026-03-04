@@ -393,6 +393,7 @@ export function AIVideoGenerationScreen({
   );
 }
 
+/* c8 ignore start */
 export const AI_VIDEO_GENERATION_SCREEN_STYLES = `
 .plv-video-screen {
   --plv-background: ${aiVideoGenerationTokens.color.background};
@@ -1022,3 +1023,4 @@ export const AI_VIDEO_GENERATION_SCREEN_STYLES = `
   }
 }
 `;
+/* c8 ignore stop */

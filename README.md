@@ -1,6 +1,7 @@
 # @plasius/video
 
 [![npm version](https://img.shields.io/npm/v/@plasius/video.svg)](https://www.npmjs.com/package/@plasius/video)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/Plasius-LTD/video/ci.yml?branch=main&label=ci&style=flat)](https://github.com/Plasius-LTD/video/actions/workflows/ci.yml)
 [![CD Status](https://img.shields.io/github/actions/workflow/status/Plasius-LTD/video/cd.yml?branch=main&label=cd&style=flat)](https://github.com/Plasius-LTD/video/actions/workflows/cd.yml)
 [![coverage](https://img.shields.io/codecov/c/github/Plasius-LTD/video)](https://codecov.io/gh/Plasius-LTD/video)
 [![License](https://img.shields.io/github/license/Plasius-LTD/video)](./LICENSE)
@@ -92,10 +93,17 @@ The staged flow aligns to the screen design sequence:
 
 ```bash
 npm install
+npm run lint
+npm run typecheck
 npm run build
-npm run test
+npm run test:coverage
 npm run demo:run
 ```
+
+## Quality Gates
+
+- CI enforces `lint`, `typecheck`, runtime dependency audit (`npm audit --omit=dev --audit-level=high`), build, and test coverage.
+- Coverage thresholds are enforced in Vitest (`lines/functions/statements >= 80`, `branches >= 70`).
 
 ## Demo Sanity Check
 
