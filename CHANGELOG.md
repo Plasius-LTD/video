@@ -15,6 +15,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - Added `AIVideoGenerationScreen` and `AIVideoGenerationStudioDemo` React components to provide a demo-ready staged UI scaffold.
   - Added visual-style token exports (`aiVideoGenerationTokens`) and stage-flow metadata (`aiVideoStageFlow`) for host app integration.
   - Added tests for design token values, stage ordering, and core style hooks in `tests/ai-video-generation-design.test.ts`.
+  - Added ADR documentation scaffold under `docs/ADRS/` with an index and governance baseline decision.
 
 - **Changed**
   - Migrated linting to ESLint flat config (`eslint.config.js`) for ESLint v10 compatibility.
@@ -81,6 +82,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 4. Tag the release in Git (`vX.Y.Z`) and push tags.
 5. Publish to npm via GitHub CD pipeline.
 
-[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.11...HEAD
 [0.1.1]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.0
+[0.1.11]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.11
