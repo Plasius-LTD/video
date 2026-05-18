@@ -33,6 +33,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
   - Expanded README/demo examples to include the AI video generation screen scaffold and exported style primitives.
 
 - **Fixed**
+  - Removed the deprecated direct `@types/uuid` dev dependency because `uuid` now ships its own type definitions.
   - Fixed publish-package verification regex escaping in `scripts/verify-public-package.cjs`.
   - Updated `videoPackageInfo.version` to match the current package line.
 
