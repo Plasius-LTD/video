@@ -1,17 +1,16 @@
 import type { CSSProperties, ReactNode } from "react";
-import { aiVideoStageFlow } from "./stages.js";
+import { useMemo } from "react";
+import { useI18n } from "@plasius/translations";
+import { getTranslatedAIVideoStageFlow } from "./stages.js";
 import { aiVideoGenerationTokens } from "./tokens.js";
-import type { AIVideoGenerationScreenModel, AIVideoImageVariant, AIVideoGenerationStage } from "./types.js";
+import type { AIVideoGenerationScreenModel, AIVideoImageVariant } from "./types.js";
+import {
+  createVideoTranslationResolver,
+  videoTranslationKeys,
+  type VideoTranslationResolver,
+} from "../i18n.js";
 
-const stageLabel: Record<AIVideoGenerationStage, string> = {
-  idle: "Prompt",
-  generatingImages: "Images",
-  imageSelection: "Selection",
-  generatingVideo: "Video",
-  playback: "Playback",
-  voiceover: "Voiceover",
-  export: "Export",
-};
+const screenKeys = videoTranslationKeys.aiVideoGeneration.screen;
 
 function clampProgress(value: number | undefined): number {
   if (typeof value !== "number" || Number.isNaN(value)) {
@@ -69,8 +68,10 @@ function renderImageCard(
   variant: AIVideoImageVariant,
   index: number,
   callbacks: AIVideoGenerationScreenCallbacks,
+  translate: VideoTranslationResolver,
 ): ReactNode {
   const isSelected = Boolean(variant.isSelected);
+  const variantLabel = variant.label;
 
   return (
     <article
@@ -90,20 +91,28 @@ function renderImageCard(
           <div className="plv-image-media" style={{ background: gradientForCard(index) }} />
         )}
         <div className="plv-image-caption">
-          <span>{variant.label}</span>
-          {isSelected ? <span className="plv-chip">Selected</span> : null}
+          <span>{variantLabel}</span>
+          {isSelected ? (
+            <span className="plv-chip">{translate(screenKeys.selected)}</span>
+          ) : null}
         </div>
       </button>
 
-      <div className="plv-image-overlay-controls" role="group" aria-label={`${variant.label} controls`}>
+      <div
+        className="plv-image-overlay-controls"
+        role="group"
+        aria-label={translate(screenKeys.imageControls, {
+          label: variantLabel,
+        })}
+      >
         <button type="button" onClick={() => callbacks.onRefineImage?.(variant)}>
-          Refine
+          {translate(screenKeys.refine)}
         </button>
         <button type="button" onClick={() => callbacks.onSaveImage?.(variant)}>
-          Save
+          {translate(screenKeys.save)}
         </button>
         <button type="button" onClick={() => callbacks.onUseForVideo?.(variant)}>
-          Use for Video
+          {translate(screenKeys.useForVideo)}
         </button>
       </div>
 
@@ -127,13 +136,14 @@ function renderSkeletonGrid(count: number): ReactNode {
 function renderStageCanvas(
   model: AIVideoGenerationScreenModel,
   callbacks: AIVideoGenerationScreenCallbacks,
+  translate: VideoTranslationResolver,
 ): ReactNode {
   const progress = clampProgress(model.generationProgress);
 
   if (model.stage === "generatingImages") {
     return (
       <>
-        <h2>Generating Image Variants</h2>
+        <h2>{translate(screenKeys.generatingImagesHeading)}</h2>
         <p className="plv-muted">{model.statusText}</p>
         {renderSkeletonGrid(model.imageVariants.length > 0 ? model.imageVariants.length : 8)}
       </>
@@ -143,10 +153,14 @@ function renderStageCanvas(
   if (model.stage === "imageSelection") {
     return (
       <>
-        <h2>Course Setting Image Grid</h2>
-        <p className="plv-muted">Select a visual anchor before video generation.</p>
+        <h2>{translate(screenKeys.imageSelectionHeading)}</h2>
+        <p className="plv-muted">
+          {translate(screenKeys.imageSelectionDescription)}
+        </p>
         <div className="plv-image-grid">
-          {model.imageVariants.map((variant, index) => renderImageCard(variant, index, callbacks))}
+          {model.imageVariants.map((variant, index) =>
+            renderImageCard(variant, index, callbacks, translate)
+          )}
         </div>
       </>
     );
@@ -155,31 +169,31 @@ function renderStageCanvas(
   if (model.stage === "generatingVideo") {
     return (
       <>
-        <h2>Video Generation Phase</h2>
+        <h2>{translate(screenKeys.generatingVideoHeading)}</h2>
         <div className="plv-split-panel">
           <div className="plv-preview-box">
-            <div className="plv-preview-title">Image Preview</div>
+            <div className="plv-preview-title">{translate(screenKeys.imagePreview)}</div>
             <div className="plv-preview-media" />
           </div>
           <div className="plv-motion-panel">
-            <div className="plv-preview-title">Motion Summary</div>
+            <div className="plv-preview-title">{translate(screenKeys.motionSummary)}</div>
             <label>
-              Camera motion
+              {translate(screenKeys.cameraMotion)}
               <textarea readOnly value={model.motionDraft.cameraMotion} />
             </label>
             <label>
-              Environmental motion
+              {translate(screenKeys.environmentalMotion)}
               <textarea readOnly value={model.motionDraft.environmentalMotion} />
             </label>
             <label>
-              Subject motion
+              {translate(screenKeys.subjectMotion)}
               <textarea readOnly value={model.motionDraft.subjectMotion} />
             </label>
           </div>
         </div>
         <div className="plv-progress-panel">
           <div className="plv-progress-topline">
-            <span>Generating Video...</span>
+            <span>{translate(screenKeys.generatingVideoProgress)}</span>
             <span>{progress}%</span>
           </div>
           <div className="plv-progress-track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
@@ -194,35 +208,42 @@ function renderStageCanvas(
   if (model.stage === "playback" || model.stage === "voiceover" || model.stage === "export") {
     return (
       <>
-        <h2>Video Playback</h2>
+        <h2>{translate(screenKeys.playbackHeading)}</h2>
         <div className="plv-player-shell">
           <div className="plv-player-frame">
             <div className="plv-player-glow" />
-            <div className="plv-player-screen">16:9 Preview Frame</div>
+            <div className="plv-player-screen">
+              {translate(screenKeys.previewFrame)}
+            </div>
           </div>
           <div className="plv-player-controls">
-            <button type="button">Play / Pause</button>
-            <button type="button">Timeline</button>
-            <button type="button">Volume</button>
+            <button type="button">{translate(screenKeys.playPause)}</button>
+            <button type="button">{translate(screenKeys.timeline)}</button>
+            <button type="button">{translate(screenKeys.volume)}</button>
             <button type="button" onClick={callbacks.onDownloadVideo}>
-              Download
+              {translate(screenKeys.download)}
             </button>
             <button type="button" onClick={callbacks.onRegenerateVideo}>
-              Regenerate
+              {translate(screenKeys.regenerate)}
             </button>
             <button type="button" onClick={callbacks.onAddVoiceover}>
-              Add Voiceover
+              {translate(screenKeys.addVoiceover)}
             </button>
           </div>
         </div>
 
         {model.stage === "voiceover" ? (
-          <section className="plv-voiceover-panel" aria-label="Voiceover panel">
-            <div className="plv-preview-title">Extracted Speech</div>
+          <section
+            className="plv-voiceover-panel"
+            aria-label={translate(screenKeys.voiceoverPanel)}
+          >
+            <div className="plv-preview-title">
+              {translate(screenKeys.extractedSpeech)}
+            </div>
             <textarea readOnly value={model.voiceSettings.script} />
             <div className="plv-voice-grid">
               <div>
-                <div className="plv-field-label">Voice</div>
+                <div className="plv-field-label">{translate(screenKeys.voice)}</div>
                 <div className="plv-pill-group">
                   {model.voicePresets.map((voice) => (
                     <button
@@ -236,11 +257,19 @@ function renderStageCanvas(
                 </div>
               </div>
               <div>
-                <div className="plv-field-label">Speed: {model.voiceSettings.speed.toFixed(1)}x</div>
+                <div className="plv-field-label">
+                  {translate(screenKeys.speed, {
+                    speed: model.voiceSettings.speed.toFixed(1),
+                  })}
+                </div>
                 <div className="plv-slider-track" />
               </div>
               <div>
-                <div className="plv-field-label">Emotion: {model.voiceSettings.emotion}</div>
+                <div className="plv-field-label">
+                  {translate(screenKeys.emotion, {
+                    emotion: model.voiceSettings.emotion,
+                  })}
+                </div>
                 <div className="plv-slider-track" />
               </div>
             </div>
@@ -249,11 +278,15 @@ function renderStageCanvas(
         ) : null}
 
         {model.stage === "export" ? (
-          <div className="plv-export-modal" role="dialog" aria-label="Export modal">
-            <h3>Export</h3>
-            <p>Finalize codec, quality, and voice mixdown profile.</p>
+          <div
+            className="plv-export-modal"
+            role="dialog"
+            aria-label={translate(screenKeys.exportModal)}
+          >
+            <h3>{translate(screenKeys.exportHeading)}</h3>
+            <p>{translate(screenKeys.exportDescription)}</p>
             <button type="button" onClick={callbacks.onExport}>
-              Confirm Export
+              {translate(screenKeys.confirmExport)}
             </button>
           </div>
         ) : null}
@@ -263,16 +296,24 @@ function renderStageCanvas(
 
   return (
     <>
-      <h2>Prompt Entry</h2>
-      <p className="plv-muted">Start with a cinematic prompt, then generate course-setting images.</p>
+      <h2>{translate(screenKeys.promptEntryHeading)}</h2>
+      <p className="plv-muted">{translate(screenKeys.promptEntryDescription)}</p>
       <div className="plv-idle-canvas">
         {model.uploadedImageName ? (
           <>
-            <div className="plv-upload-chip">Upload Image: {model.uploadedImageName}</div>
-            <div className="plv-required-chip">Add Motion Instructions (Required)</div>
+            <div className="plv-upload-chip">
+              {translate(screenKeys.uploadedImage, {
+                fileName: model.uploadedImageName,
+              })}
+            </div>
+            <div className="plv-required-chip">
+              {translate(screenKeys.motionInstructionsRequired)}
+            </div>
           </>
         ) : (
-          <div className="plv-upload-chip">Upload an image or write a prompt to begin.</div>
+          <div className="plv-upload-chip">
+            {translate(screenKeys.promptEntryEmpty)}
+          </div>
         )}
       </div>
     </>
@@ -287,6 +328,12 @@ export function AIVideoGenerationScreen({
   reduceMotion = false,
   ...callbacks
 }: AIVideoGenerationScreenProps) {
+  const { t } = useI18n();
+  const translate = useMemo(() => createVideoTranslationResolver(t), [t]);
+  const stageFlow = useMemo(
+    () => getTranslatedAIVideoStageFlow(translate),
+    [translate],
+  );
   const rootClassName = [
     "plv-video-screen",
     reduceMotion ? "plv-reduce-motion" : "",
@@ -306,26 +353,32 @@ export function AIVideoGenerationScreen({
         <div className="plv-project-title">{model.projectName}</div>
         <div className="plv-header-actions">
           <button type="button" onClick={callbacks.onHistory}>
-            History
+            {translate(screenKeys.history)}
           </button>
           <button type="button" onClick={callbacks.onSettings}>
-            Settings
+            {translate(screenKeys.settings)}
           </button>
           <button type="button" onClick={callbacks.onExport}>
-            Export
+            {translate(screenKeys.exportAction)}
           </button>
           <button type="button" onClick={callbacks.onAccount}>
-            Account
+            {translate(screenKeys.account)}
           </button>
         </div>
       </header>
 
-      <main className="plv-main-canvas">{renderStageCanvas(model, callbacks)}</main>
+      <main className="plv-main-canvas">
+        {renderStageCanvas(model, callbacks, translate)}
+      </main>
 
       {showContextPanel ? (
         <aside className="plv-context-panel">
-          <div className="plv-context-title">Context Panel</div>
-          <div className="plv-chip-row" role="list" aria-label="Prompt versions">
+          <div className="plv-context-title">{translate(screenKeys.contextPanel)}</div>
+          <div
+            className="plv-chip-row"
+            role="list"
+            aria-label={translate(screenKeys.promptVersions)}
+          >
             {model.promptVersions.map((version) => (
               <button
                 type="button"
@@ -339,20 +392,20 @@ export function AIVideoGenerationScreen({
           </div>
           <div className="plv-metadata-grid">
             <div>
-              <span>Stage</span>
-              <strong>{stageLabel[model.stage]}</strong>
+              <span>{translate(screenKeys.stage)}</span>
+              <strong>{translate(screenKeys.stageShortLabel[model.stage])}</strong>
             </div>
             <div>
-              <span>Status</span>
+              <span>{translate(screenKeys.status)}</span>
               <strong>{model.statusText}</strong>
             </div>
             <div>
-              <span>Prompt</span>
+              <span>{translate(screenKeys.prompt)}</span>
               <strong>{model.prompt}</strong>
             </div>
           </div>
           <div className="plv-stage-row">
-            {aiVideoStageFlow.map((stage) => (
+            {stageFlow.map((stage) => (
               <span key={stage.stage} className={stage.stage === model.stage ? "is-active" : undefined}>
                 {stage.label}
               </span>
@@ -363,30 +416,32 @@ export function AIVideoGenerationScreen({
 
       <footer className="plv-prompt-area">
         <label className="plv-sr-only" htmlFor="plv-prompt-textarea">
-          Prompt input
+          {translate(screenKeys.promptInput)}
         </label>
         <textarea
           id="plv-prompt-textarea"
           value={model.prompt}
           readOnly
           placeholder={model.promptPlaceholder}
-          aria-label="Prompt input"
+          aria-label={translate(screenKeys.promptInput)}
         />
 
         <div className="plv-prompt-actions">
           <button type="button" onClick={callbacks.onUploadImage}>
-            Upload Image
+            {translate(screenKeys.uploadImage)}
           </button>
           <button type="button" onClick={callbacks.onAdvanced}>
-            Advanced
+            {translate(screenKeys.advanced)}
           </button>
           <button type="button" className="is-generate" disabled={!model.canGenerate} onClick={callbacks.onGenerate}>
-            Generate
+            {translate(screenKeys.generate)}
           </button>
         </div>
 
         {requiresMotionPrompt ? (
-          <div className="plv-required-chip">Upload Image complete. Motion prompt is required before generating.</div>
+          <div className="plv-required-chip">
+            {translate(screenKeys.motionPromptRequired)}
+          </div>
         ) : null}
       </footer>
     </section>
