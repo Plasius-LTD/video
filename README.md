@@ -27,12 +27,14 @@ import {
   createAIVideoGenerationDemoModel,
   aiVideoGenerationTokens,
   aiVideoStageFlow,
+  videoTranslations,
   videoPackageInfo,
 } from "@plasius/video";
 
 console.log(videoPackageInfo.name, videoPackageInfo.version);
 console.log(aiVideoGenerationTokens.color.background);
 console.log(aiVideoStageFlow.map((stage) => stage.stage));
+console.log(Object.keys(videoTranslations));
 
 const model = createAIVideoGenerationDemoModel("imageSelection");
 void AIVideoGenerationScreen;
@@ -71,7 +73,25 @@ Primary exports:
 - `createAIVideoGenerationDemoModel`
 - `aiVideoGenerationTokens`
 - `aiVideoStageFlow`
+- `getTranslatedAIVideoStageFlow`
+- `videoTranslations`
 - `AI_VIDEO_GENERATION_SCREEN_STYLES`
+
+## Translations
+
+AI video generation demo labels, stage metadata, screen controls, and accessibility labels are packaged as `en-GB` defaults and resolved through `@plasius/translations`.
+React components keep English fallback defaults when the host translator has not loaded the dictionary, and host applications can load or override the same keys.
+
+```ts
+import { getTranslator } from "@plasius/translations";
+import { videoTranslations } from "@plasius/video";
+
+const i18n = getTranslator();
+
+for (const [language, dictionary] of Object.entries(videoTranslations)) {
+  i18n.loadTranslations(language, dictionary);
+}
+```
 
 Reference design document:
 
