@@ -3,28 +3,64 @@ import type {
   AIVideoGenerationStage,
   AIVideoImageVariant,
 } from "./types.js";
+import {
+  getVideoDefaultTranslation,
+  videoTranslationKeys,
+  type VideoTranslationResolver,
+} from "../i18n.js";
 
-const basePrompt = "Mountain village at sunset";
-const refinement = "Add fog rolling through the valley";
+const demoKeys = videoTranslationKeys.aiVideoGeneration.demo;
 
-const baseVariants: AIVideoImageVariant[] = [
-  { id: "img-1", label: "Variant 1", alt: "Village view with warm skyline" },
-  { id: "img-2", label: "Variant 2", alt: "Village rooftops and distant mountains" },
-  { id: "img-3", label: "Variant 3", alt: "Bridge over misted valley" },
-  { id: "img-4", label: "Variant 4", alt: "Forest edge overlooking village lights" },
-  { id: "img-5", label: "Variant 5", alt: "Cloud bank drifting above the town" },
-  { id: "img-6", label: "Variant 6", alt: "Cinematic wide frame across the valley" },
-];
+function createBaseVariants(
+  translate: VideoTranslationResolver,
+): AIVideoImageVariant[] {
+  return [
+    {
+      id: "img-1",
+      label: translate(demoKeys.imageVariants.img1.label),
+      alt: translate(demoKeys.imageVariants.img1.alt),
+    },
+    {
+      id: "img-2",
+      label: translate(demoKeys.imageVariants.img2.label),
+      alt: translate(demoKeys.imageVariants.img2.alt),
+    },
+    {
+      id: "img-3",
+      label: translate(demoKeys.imageVariants.img3.label),
+      alt: translate(demoKeys.imageVariants.img3.alt),
+    },
+    {
+      id: "img-4",
+      label: translate(demoKeys.imageVariants.img4.label),
+      alt: translate(demoKeys.imageVariants.img4.alt),
+    },
+    {
+      id: "img-5",
+      label: translate(demoKeys.imageVariants.img5.label),
+      alt: translate(demoKeys.imageVariants.img5.alt),
+    },
+    {
+      id: "img-6",
+      label: translate(demoKeys.imageVariants.img6.label),
+      alt: translate(demoKeys.imageVariants.img6.alt),
+    },
+  ];
+}
 
-const stageStatusText: Record<AIVideoGenerationStage, string> = {
-  idle: "Ready to generate image directions.",
-  generatingImages: "Generating course-setting image variants...",
-  imageSelection: "Choose a visual anchor for motion extraction.",
-  generatingVideo: "Generating video from selected course image...",
-  playback: "Video ready for review.",
-  voiceover: "Voiceover tools ready.",
-  export: "Review export profile and metadata.",
-};
+function createStageStatusText(
+  translate: VideoTranslationResolver,
+): Record<AIVideoGenerationStage, string> {
+  return {
+    idle: translate(demoKeys.status.idle),
+    generatingImages: translate(demoKeys.status.generatingImages),
+    imageSelection: translate(demoKeys.status.imageSelection),
+    generatingVideo: translate(demoKeys.status.generatingVideo),
+    playback: translate(demoKeys.status.playback),
+    voiceover: translate(demoKeys.status.voiceover),
+    export: translate(demoKeys.status.export),
+  };
+}
 
 function withSelectedVariant(
   variants: AIVideoImageVariant[],
@@ -38,16 +74,20 @@ function withSelectedVariant(
 
 export function createAIVideoGenerationDemoModel(
   stage: AIVideoGenerationStage = "idle",
+  translate: VideoTranslationResolver = getVideoDefaultTranslation,
 ): AIVideoGenerationScreenModel {
   const selectedId = "img-3";
+  const basePrompt = translate(demoKeys.basePrompt);
+  const refinement = translate(demoKeys.refinement);
+  const baseVariants = createBaseVariants(translate);
   const selectedVariants = withSelectedVariant(baseVariants, selectedId);
+  const stageStatusText = createStageStatusText(translate);
 
   const model: AIVideoGenerationScreenModel = {
     stage,
-    projectName: "Mountain Valley Storyboard",
+    projectName: translate(demoKeys.projectName),
     prompt: basePrompt,
-    promptPlaceholder:
-      "Describe your scene, camera movement, mood, and intended spoken narration...",
+    promptPlaceholder: translate(demoKeys.promptPlaceholder),
     canGenerate: stage !== "generatingImages" && stage !== "generatingVideo",
     statusText: stageStatusText[stage],
     generationProgress: stage === "generatingVideo" ? 62 : 100,
@@ -64,39 +104,42 @@ export function createAIVideoGenerationDemoModel(
     promptVersions: [
       {
         id: "v1",
-        label: "Version 1",
+        label: translate(demoKeys.promptVersions.version1),
         basePrompt,
       },
       {
         id: "v2",
-        label: "Version 2",
+        label: translate(demoKeys.promptVersions.version2),
         basePrompt,
         refinement,
       },
       {
         id: "v3",
-        label: "Version 3",
+        label: translate(demoKeys.promptVersions.version3),
         basePrompt,
-        refinement: `${refinement}; camera starts low and pans left.`,
+        refinement: translate(demoKeys.promptVersions.version3Refinement),
         isActive: true,
       },
     ],
     motionDraft: {
-      cameraMotion: "Camera slowly pans left, then settles into a medium-wide frame.",
-      environmentalMotion: "Fog layers move through the valley while lantern light flickers.",
-      subjectMotion: "Foreground flags sway and distant birds cross near the skyline.",
+      cameraMotion: translate(demoKeys.motionDraft.camera),
+      environmentalMotion: translate(demoKeys.motionDraft.environmental),
+      subjectMotion: translate(demoKeys.motionDraft.subject),
     },
-    motionPrompt: "Camera slowly pans left with drifting fog and gentle ambient motion.",
+    motionPrompt: translate(demoKeys.motionPrompt),
     voiceSettings: {
-      script: "Welcome to the ancient valley. Each light tells a story waiting to be explored.",
+      script: translate(demoKeys.voice.script),
       voiceId: "narrator-documentary",
       speed: 1,
-      emotion: "Neutral",
+      emotion: translate(demoKeys.voice.emotion),
     },
     voicePresets: [
-      { id: "male-warm", label: "Male Warm" },
-      { id: "female-calm", label: "Female Calm" },
-      { id: "narrator-documentary", label: "Narrator Documentary" },
+      { id: "male-warm", label: translate(demoKeys.voice.presets.maleWarm) },
+      { id: "female-calm", label: translate(demoKeys.voice.presets.femaleCalm) },
+      {
+        id: "narrator-documentary",
+        label: translate(demoKeys.voice.presets.narratorDocumentary),
+      },
     ],
     videoSource:
       stage === "playback" || stage === "voiceover" || stage === "export"
@@ -105,10 +148,10 @@ export function createAIVideoGenerationDemoModel(
   };
 
   if (stage === "idle") {
-    model.uploadedImageName = "uploaded-village-frame.png";
+    model.uploadedImageName = translate(demoKeys.uploadedImageName);
     model.motionPrompt = "";
     model.canGenerate = false;
-    model.statusText = "Upload Image: complete. Add motion instructions (required).";
+    model.statusText = translate(demoKeys.status.idleUploadedImage);
   }
 
   return model;

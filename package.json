@@ -1,6 +1,6 @@
 {
   "name": "@plasius/video",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Standalone npm package for video generation components and helpers for the Plasius ecosystem",
   "type": "module",
   "private": false,
@@ -72,6 +72,9 @@
     "react": "^19",
     "react-dom": "^19"
   },
+  "dependencies": {
+    "@plasius/translations": "^1.0.17"
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@testing-library/dom": "^10.4.1",
@@ -79,7 +82,6 @@
     "@types/node": "^25.7.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@types/uuid": "^11.0.0",
     "@typescript-eslint/eslint-plugin": "^8.59.3",
     "@typescript-eslint/parser": "^8.59.3",
     "@vitest/coverage-v8": "^4.1.6",
