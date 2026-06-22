@@ -20,6 +20,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 - **Security**
   - (placeholder)
 
+## [0.1.17] - 2026-06-22
+
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
 ## [0.1.16] - 2026-06-22
 
 - **Added**
@@ -100,8 +114,9 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 4. Tag the release in Git (`vX.Y.Z`) and push tags.
 5. Publish to npm via GitHub CD pipeline.
 
-[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.16...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.17...HEAD
 [0.1.1]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.0
 [0.1.11]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.11
 [0.1.16]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.16
+[0.1.17]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.17
