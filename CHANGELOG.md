@@ -13,6 +13,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 - **Changed**
   - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.1.19] - 2026-07-13
+
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
   - Consume the RFC-remediated `@plasius/translations` release (task #25).
 
 - **Fixed**
@@ -129,10 +143,11 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 4. Tag the release in Git (`vX.Y.Z`) and push tags.
 5. Publish to npm via GitHub CD pipeline.
 
-[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.18...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.19...HEAD
 [0.1.1]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.0
 [0.1.11]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.11
 [0.1.16]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.16
 [0.1.17]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.17
 [0.1.18]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.18
+[0.1.19]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.19
