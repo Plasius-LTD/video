@@ -117,6 +117,7 @@
   },
   "packageManager": "npm@11.14.1",
   "overrides": {
+    "esbuild": "^0.28.1",
     "minimatch": "^10.2.1"
   }
 }
