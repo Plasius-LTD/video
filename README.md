@@ -135,7 +135,7 @@ npm run demo:run
 
 This package is published via GitHub CD only.
 
-1. Configure repository environment `production` with secret `NPM_TOKEN`.
+1. Configure npm Trusted Publishing for this repository's `cd.yml` workflow and GitHub `production` environment.
 2. Run `.github/workflows/cd.yml` via **Actions -> CD (Publish to npm) -> Run workflow**.
 3. Select the version bump (`patch`, `minor`, `major`, or `none`) and optional pre-release id.
 
