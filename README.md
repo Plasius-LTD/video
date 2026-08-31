@@ -1,8 +1,7 @@
 # @plasius/video
 
 [![npm version](https://img.shields.io/npm/v/@plasius/video.svg)](https://www.npmjs.com/package/@plasius/video)
-[![CI Status](https://img.shields.io/github/actions/workflow/status/Plasius-LTD/video/ci.yml?branch=main&label=ci&style=flat)](https://github.com/Plasius-LTD/video/actions/workflows/ci.yml)
-[![CD Status](https://img.shields.io/github/actions/workflow/status/Plasius-LTD/video/cd.yml?branch=main&label=cd&style=flat)](https://github.com/Plasius-LTD/video/actions/workflows/cd.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/Plasius-LTD/video/ci.yml?branch=main&label=build&style=flat)](https://github.com/Plasius-LTD/video/actions/workflows/ci.yml)
 [![coverage](https://img.shields.io/codecov/c/github/Plasius-LTD/video)](https://codecov.io/gh/Plasius-LTD/video)
 [![License](https://img.shields.io/github/license/Plasius-LTD/video)](./LICENSE)
 [![Code of Conduct](https://img.shields.io/badge/code%20of%20conduct-yes-blue.svg)](./CODE_OF_CONDUCT.md)
@@ -155,10 +154,10 @@ Licensed under the [Apache-2.0 License](./LICENSE).
 ## Release integrity
 
 CI keeps the administrative contributor registry outside Git and npm package
-artifacts using exact, case-normalised path checks. CI runs on approved
-self-hosted runners for same-repository pull requests and `main`; fork PR code
-is denied. Publication uses the GitHub-hosted `production` job with Node 24 and
-npm 11.5.1 or newer. It is token-free and proceeds only while the prepared SHA
+artifacts using exact, case-normalised path checks. Reviewed CI runs on explicit
+GitHub-hosted runners with package-manager caching disabled; fork PR code is
+denied. Publication uses the GitHub-hosted `production` job with Node 24 and
+pinned npm 11.6.2. It is token-free and proceeds only while the prepared SHA
 is the exact `main` head after successful push-triggered CI. Do not dispatch CD
 until the npm trusted-publisher binding is verified.
 <!-- END PLASIUS RELEASE INTEGRITY -->
