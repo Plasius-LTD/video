@@ -8,6 +8,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.1.20] - 2026-09-28
+
 - Refresh npm dependency lockfile to current supported stable versions (weekly maintenance, 2026-09-28). Refresh published Plasius package baselines after upstream releases.
 
 - **Added**
@@ -151,7 +165,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 4. Tag the release in Git (`vX.Y.Z`) and push tags.
 5. Publish to npm via GitHub CD pipeline.
 
-[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.19...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.20...HEAD
 [0.1.1]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.0
 [0.1.11]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.11
@@ -159,3 +173,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [0.1.17]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.17
 [0.1.18]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.18
 [0.1.19]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.19
+[0.1.20]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.20
