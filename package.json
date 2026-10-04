@@ -73,7 +73,7 @@
     "react-dom": "^19"
   },
   "dependencies": {
-    "@plasius/translations": "^1.0.24"
+    "@plasius/translations": "^1.0.25"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -117,10 +117,10 @@
   },
   "packageManager": "npm@11.19.1",
   "overrides": {
-    "brace-expansion": "5.0.9",
+    "brace-expansion": "5.0.12",
     "nanoid": "3.3.18",
     "fast-uri": "^3.1.6",
-    "undici": "7.29.0",
+    "undici": "7.30.0",
     "esbuild": "^0.28.1",
     "minimatch": "^10.2.1"
   }
