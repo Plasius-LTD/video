@@ -73,7 +73,7 @@
     "react-dom": "^19"
   },
   "dependencies": {
-    "@plasius/translations": "^1.0.25"
+    "@plasius/translations": "^1.0.26"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
