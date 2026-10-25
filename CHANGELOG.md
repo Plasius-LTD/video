@@ -8,6 +8,9 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- Update the pinned Undici override to 7.30.1 to resolve audited advisories.
+- Refresh npm dependency lockfile to current supported stable versions (weekly maintenance, 2026-10-25). Refresh published Plasius package baselines after upstream releases.
+
 - **Added**
   - (placeholder)
 
