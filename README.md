@@ -154,10 +154,29 @@ Licensed under the [Apache-2.0 License](./LICENSE).
 ## Release integrity
 
 CI keeps the administrative contributor registry outside Git and npm package
-artifacts using exact, case-normalised path checks. Reviewed CI runs on explicit
-GitHub-hosted runners with package-manager caching disabled; fork PR code is
-denied. Publication uses the GitHub-hosted `production` job with Node 24 and
+artifacts using exact, case-normalised path checks. CI runs only on pushes to `main`, on explicit `[self-hosted, Linux, X64]`
+runners in the approved quarantined group. PR, manual and reusable CI entry
+points are disabled, checkout credentials are not persisted, and jobs have
+bounded timeouts with package-manager caching disabled. PR qualification uses
+local checks; publication still requires successful exact-main push CI. Publication uses the GitHub-hosted `production` job with Node 24 and
 pinned npm 11.6.2. It is token-free and proceeds only while the prepared SHA
 is the exact `main` head after successful push-triggered CI. Do not dispatch CD
 until the npm trusted-publisher binding is verified.
 <!-- END PLASIUS RELEASE INTEGRITY -->
+
+
+### Recovery operations
+
+Recovery Task #28 inherits Feature #1597's `platform.public-artifact-integrity.enabled`.
+The stored flag controls staged public restoration; mandatory admission checks
+cannot be bypassed by it. Before release preparation, verify public visibility,
+the `production` environment, and the npm publisher binding to
+`Plasius-LTD/video`, `cd.yml`, `production`. Reconcile registry and removed/retired
+version records to select a never-used version; registry absence alone is insufficient.
+Do not dispatch CD while admission evidence is missing. Existing CD state is unchanged.
+
+Rollback disables the affected workflow/distribution channel and turns off staged
+restoration through the stored flag. Never restore the administrative registry path,
+substitute hosted CI, add a token fallback, or reuse a removed version. After a
+reviewed merge, verify push CI on the exact main SHA before ordinary production
+OIDC CD, then verify package provenance and installed-consumer behavior.

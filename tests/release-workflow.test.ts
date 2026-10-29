@@ -25,14 +25,22 @@ describe("package release trust boundary", () => {
     expect(cdWorkflow).not.toMatch(/NPM_TOKEN|NODE_AUTH_TOKEN/u);
   });
 
-  it("keeps same-repository pull-request CI on explicit hosted runners", () => {
-    expect(ciWorkflow).toContain("workflow_dispatch:");
-    expect(ciWorkflow).toContain("pull_request:");
-    expect(ciWorkflow).toContain("runs-on: ubuntu-latest");
+  it("limits self-hosted CI to trusted main pushes", () => {
+    const triggers = ciWorkflow.split("permissions:")[0];
+    expect(triggers).toContain("push:");
+    expect(triggers).toContain("branches: [main]");
+    expect(triggers).not.toMatch(/pull_request|workflow_dispatch|workflow_call|schedule/u);
+    const jobs = [...ciWorkflow.matchAll(/^ {2}[a-z][\w-]*:\n([\s\S]*?)(?=^ {2}[a-z][\w-]*:|$(?![\s\S]))/gmu)]
+      .map((match) => match[1]).filter((job) => job.includes("runs-on:"));
+    expect(jobs).toHaveLength(2);
+    for (const job of jobs) {
+      expect(job).toContain("runs-on: [self-hosted, Linux, X64]");
+      expect(job).toContain("github.event_name == 'push' && github.ref == 'refs/heads/main'");
+      expect(job).toMatch(/timeout-minutes: (?:10|30)\b/u);
+      expect(job).toContain("persist-credentials: false");
+    }
     expect(ciWorkflow).toContain("package-manager-cache: false");
-    expect(ciWorkflow).toContain("github.event.pull_request.head.repo.full_name == github.repository");
-    expect(ciWorkflow).not.toContain("self-hosted");
-    expect(ciWorkflow).not.toContain("pull_request_target");
-    expect(ciWorkflow).not.toContain("fromJSON(vars.");
+    expect(ciWorkflow).not.toMatch(/ubuntu-latest|pull_request_target|fromJSON|inputs\.|vars\./u);
+    expect(ciWorkflow).toContain("cancel-in-progress: true");
   });
 });

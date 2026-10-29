@@ -8,6 +8,9 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- Restore approved self-hosted main-push CI with explicit trust guards, bounded
+  jobs, nonpersistent checkout credentials and regression contracts (Task #28).
+
 - **Added**
   - (placeholder)
 
