@@ -8,6 +8,20 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 
 ## [Unreleased]
 
+- **Added**
+  - (placeholder)
+
+- **Changed**
+  - (placeholder)
+
+- **Fixed**
+  - (placeholder)
+
+- **Security**
+  - (placeholder)
+
+## [0.1.25] - 2026-11-22
+
 - Refresh supported npm dependency and security tooling baselines; preserve runtime API contracts (weekly maintenance, 2026-11-22).
 
 - **Added**
@@ -232,7 +246,7 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 4. Tag the release in Git (`vX.Y.Z`) and push tags.
 5. Publish to npm via GitHub CD pipeline.
 
-[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.24...HEAD
+[Unreleased]: https://github.com/Plasius-LTD/video/compare/v0.1.25...HEAD
 [0.1.1]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.0
 [0.1.11]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.11
@@ -245,3 +259,4 @@ The format is based on **[Keep a Changelog](https://keepachangelog.com/en/1.1.0/
 [0.1.22]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.22
 [0.1.23]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.23
 [0.1.24]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.24
+[0.1.25]: https://github.com/Plasius-LTD/video/releases/tag/v0.1.25
